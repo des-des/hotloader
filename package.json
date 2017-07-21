@@ -12,7 +12,7 @@
     "start": "node server.js",
     "build": "browserify client.js -o bundle.js",
     "dev": "watchify client.js -o bundle.js",
-    "publish": "npm run build && git add -f bundle.js && git commit -m \"publish\" && npm run publish"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
