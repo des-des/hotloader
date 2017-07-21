@@ -1,0 +1,43 @@
+{
+  "name": "hotloader",
+  "version": "0.0.1",
+  "description": "simple lib for fast html hotloading",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "bundle.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build": "browserify client.js -o bundle.js",
+    "publish": "npm run build && git add -f bundle.js && git commit -m \"publish\" && npm run publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/des-des/hotloader.git"
+  },
+  "keywords": [
+    "virtual-dom",
+    "livereload",
+    "hot-reload",
+    "snabbdom"
+  ],
+  "author": "des-des",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/des-des/hotloader/issues"
+  },
+  "homepage": "https://github.com/des-des/hotloader#readme",
+  "dependencies": {
+    "chokidar": "^1.7.0",
+    "htmlparser2": "^3.9.2",
+    "snabbdom": "^0.6.9",
+    "snabbdom-virtualize": "^0.6.0",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0"
+  }
+}
