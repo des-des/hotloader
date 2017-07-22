@@ -4,9 +4,9 @@ const chokidar = require('chokidar')
 const socketio = require('socket.io')
 
 const hotLoaderClientHtml =
-  fs.readFileSync(path.join(__dirname, 'bundle.js'), 'utf8')
+  fs.readFileSync(path.join(__dirname, 'client.js'), 'utf8')
 
-const generateId = (i => () => { i++ })(0)
+const generateId = (i => () => { return i++ })(0)
 
 const injectHotloader = (html, clientId) => {
   const re = /<\/body>/g
