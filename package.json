@@ -1,6 +1,6 @@
 {
   "name": "hotloader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "simple lib for fast html hotloading",
   "main": "dist/index.js",
   "files": [
@@ -12,7 +12,9 @@
     "build": "npm run build_client && npm run build_index",
     "build_client": "browserify src/client.js -t [ babelify --presets [ es2015 ] ] -o dist/client.js",
     "build_index": "babel src/index.js --out-file=dist/index.js --presets=es2015",
-    "dev": "watchify client.js -o bundle.js",
+    "dev": "npm run dev_index & npm run dev_client",
+    "dev_client": "watchify src/client.js -o dist/client.js",
+    "dev_index": "babel src/index.js --watch --out-file=dist/index.js",
     "prepublish": "npm run build",
     "lint": "standard src/*.js"
   },
