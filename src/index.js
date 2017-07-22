@@ -3,9 +3,10 @@ const path = require('path')
 const chokidar = require('chokidar')
 const socketio = require('socket.io')
 
-const hotLoaderClientHtml = fs.readFileSync(path.join(__dirname, 'bundle.js'), 'utf8')
+const hotLoaderClientHtml =
+  fs.readFileSync(path.join(__dirname, 'bundle.js'), 'utf8')
 
-const generateId = (i => () => { return i++ })(0)
+const generateId = (i => () => { i++ })(0)
 
 const injectHotloader = (html, clientId) => {
   const re = /<\/body>/g
@@ -16,7 +17,7 @@ const injectHotloader = (html, clientId) => {
     return html
   }
   return `
-    ${html.slice(0, i-7)}
+    ${html.slice(0, i - 7)}
     <script type="text/javascript">
       ${hotLoaderClientHtml}
     </script>
@@ -24,13 +25,13 @@ const injectHotloader = (html, clientId) => {
       console.log('setting HOTLOADER_CLIENT_ID to ', ${clientId})
       var HOTLOADER_CLIENT_ID = ${clientId}
     </script>
-    ${html.slice(i-7)}
-  `;
+    ${html.slice(i - 7)}
+  `
 }
 
 const emitHtml = (socket, getHtml) => {
   getHtml((err, html) => {
-    if (err) return console.error(err);
+    if (err) return console.error(err)
     socket.emit(
       'html',
       html
@@ -66,7 +67,6 @@ const hotloader = listener => {
       })
     })
   })
-
   const registerView = (watchFiles, getHtml, cb) => {
     const clientId = generateId()
     hotloaders[clientId] = { getHtml, watchFiles }

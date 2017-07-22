@@ -1,16 +1,17 @@
 {
   "name": "hotloader",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "simple lib for fast html hotloading",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
-    "index.js",
-    "bundle.js"
+    "dist",
+    "src"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "build": "browserify client.js -o bundle.js",
+    "build": "npm run build_client && npm run build_index",
+    "build_client": "browserify src/client.js -t [ babelify --presets [ es2015 ] ] -o dist/client.js",
+    "build_index": "babel src/index.js --out-file=dist/index.js --presets=es2015",
     "dev": "watchify client.js -o bundle.js",
     "prepublish": "npm run build"
   },
@@ -35,10 +36,14 @@
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
     "snabbdom": "^0.6.9",
     "snabbdom-virtualize": "^0.6.0",
     "socket.io-client": "^2.0.3",
-    "watchify": "^3.9.0",
-    "browserify": "^14.4.0"
+    "uglify-js": "^3.0.25",
+    "watchify": "^3.9.0"
   }
 }

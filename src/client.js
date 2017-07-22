@@ -33,6 +33,7 @@ const hotloader = () => {
 
     if (newVNode) {
       vNode = patch(vNode, virtualize(html))
+      window.focus()
     }
   }
   self.recieveUpdate = recieveUpdate
