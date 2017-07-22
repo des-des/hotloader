@@ -34,7 +34,10 @@ const hotloader = () => {
 
     if (newVNode) {
       vNode = patch(vNode, virtualize(html))
-      window.focus()
+
+      // hack for chrome.
+      // changes to tag class were not taking effect until mouse over
+      document.getElementsByTagName('body')[0].focus()
     }
   }
   self.recieveUpdate = recieveUpdate
