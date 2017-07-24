@@ -1,6 +1,6 @@
 {
   "name": "hotloader",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "simple lib for fast html hotloading",
   "main": "dist/index.js",
   "files": [
