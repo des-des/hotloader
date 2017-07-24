@@ -71,7 +71,7 @@ server.listen(4000, () => { console.log('listening on 4000') })
 
 Rather than use this module directly, this should be used to create middleware / plugins to enable hotloading of html.
 
-  1. [express-engine-hotloader](express-engine-hotloader)
+  1. [express-engine-hotloader](https://github.com/des-des/express-engine-hotloader)
 
 more coming soon ...
 
