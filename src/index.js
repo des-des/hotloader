@@ -35,9 +35,10 @@ const emitHtml = (socket, getHtml) => {
     socket.emit(
       'html',
       html
-      .split('\n')
-      .slice(1)
-      .join('\n')
+        .toString()
+        .split('\n')
+        .slice(1)
+        .join('\n')
     )
   })
 }
