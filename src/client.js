@@ -1,3 +1,5 @@
+/* global HOTLOADER_CLIENT_ID location */
+
 const virtualize = require('snabbdom-virtualize').default
 const patch = require('snabbdom').init([
   require('snabbdom/modules/class').default,
@@ -9,12 +11,21 @@ const patch = require('snabbdom').init([
 const h = require('snabbdom/h').default
 const io = require('socket.io-client')
 
-/* global HOTLOADER_CLIENT_ID location */
-
 const findBody = htmlVNode => {
   const { children } = htmlVNode
   const expectedBody = children[children.length - 1]
   return expectedBody.sel === 'body' && expectedBody
+}
+
+const handleError = html => (msg, e) => {
+  console.error([
+    msg,
+    'Rebuilding entire page',
+    'Error message: ' + e.message
+  ].join('\n'))
+
+  document.innerHTML = html
+  document.getElementsByTagName('body')[0].focus()
 }
 
 const hotloader = () => {
@@ -29,16 +40,26 @@ const hotloader = () => {
   )
 
   const recieveUpdate = html => {
-    if (!html) throw new Error('got empty html!')
-    const newVNode = findBody(virtualize(html))
+    if (!html) return
 
-    if (newVNode) {
-      vNode = patch(vNode, virtualize(html))
+    const fallback = handleError(html)
 
-      // hack for chrome.
-      // changes to tag class were not taking effect until mouse over
-      document.getElementsByTagName('body')[0].focus()
+    let newVNode
+
+    try {
+      newVNode = virtualize(html)
+    } catch (e) {
+      return fallback('Failed to virtualize incoming html.', e)
     }
+
+    try {
+      vNode = patch(vNode, findBody(newVNode))
+    } catch (e) {
+      return fallback('Patching DOM failed.', e)
+    }
+
+    // hack for chrome, force repaint on unfocused window.
+    document.getElementsByTagName('body')[0].focus()
   }
   self.recieveUpdate = recieveUpdate
 
