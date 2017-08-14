@@ -24,7 +24,7 @@ const handleError = html => (msg, e) => {
     'Error message: ' + e.message
   ].join('\n'))
 
-  document.innerHTML = html
+  document.documentElement.innerHTML = html
   document.getElementsByTagName('body')[0].focus()
 }
 
