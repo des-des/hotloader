@@ -32,13 +32,17 @@ const injectHotloader = (html, clientId) => {
 const emitHtml = (socket, getHtml) => {
   getHtml((err, html) => {
     if (err) return console.error(err)
+
+    const re = /<!DOCTYPE html>/
+    const doctype = re.exec(html)
+
+    const cleanHtml = doctype
+      ? html.slice(0, doctype.lastIndex) + html.slice(doctype.lastIndex + 15)
+      : html
+
     socket.emit(
       'html',
-      html
-        .toString()
-        .split('\n')
-        .slice(1)
-        .join('\n')
+      cleanHtml
     )
   })
 }
