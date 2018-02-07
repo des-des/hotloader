@@ -34,10 +34,10 @@ const emitHtml = (socket, getHtml) => {
     if (err) return console.error(err)
 
     const re = /<!DOCTYPE html>/
-    const doctype = re.exec(html)
+    const result = re.exec(html)
 
-    const cleanHtml = doctype
-      ? html.slice(0, doctype.lastIndex) + html.slice(doctype.lastIndex + 15)
+    const cleanHtml = result
+      ? html.slice(0, re.lastIndex) + html.slice(re.lastIndex + 15)
       : html
 
     socket.emit(
